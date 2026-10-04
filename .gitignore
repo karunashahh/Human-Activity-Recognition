@@ -1,0 +1,34 @@
+# ---- Dataset (download it from UCI, do not upload it) ----
+UCI HAR Dataset/
+UCI_HAR_Dataset/
+*.zip
+
+# ---- Files created by the notebook ----
+saved_models/
+*.keras
+*.h5
+*.joblib
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+.env
+
+# ---- OS / editors ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.virtual_documents/
