@@ -1,12 +1,18 @@
 # Human Activity Recognition Using Machine Learning and LSTM
 
-## About the Project
+A machine learning project for classifying human activities using smartphone sensor data.
 
-This project is about Human Activity Recognition using the UCI Human Activity Recognition Using Smartphones dataset.
+The project compares **classical machine learning models using engineered features** with **LSTM neural networks trained on raw sensor sequences**. The goal was to see how different approaches perform on the same Human Activity Recognition problem.
 
-The main goal of the project is to predict what activity a person is doing based on sensor data collected from a smartphone.
+The experiments use the **UCI Human Activity Recognition Using Smartphones Dataset**, which contains sensor measurements collected from smartphones while participants performed different activities.
 
-The six activities in the dataset are:
+---
+
+## Project Overview
+
+Human Activity Recognition (HAR) is the task of identifying what a person is doing based on sensor data.
+
+In this project, six activities are classified:
 
 - Walking
 - Walking Upstairs
@@ -15,86 +21,110 @@ The six activities in the dataset are:
 - Standing
 - Laying
 
-I worked on this project to understand how different machine learning models perform on the same dataset and to compare traditional machine learning models with an LSTM-based deep learning approach.
+Two different approaches were compared:
+
+1. **Classical Machine Learning**
+   - Logistic Regression
+   - Linear SVC
+   - RBF SVM
+   - Decision Tree
+   - Random Forest
+
+2. **Deep Learning**
+   - LSTM models trained directly on raw sensor sequences
+
+The main objective was not just to train one model, but to compare different approaches and understand which type of model works better for this dataset.
 
 ---
 
 ## Dataset
 
-I used the UCI Human Activity Recognition Using Smartphones dataset.
+The project uses the **UCI Human Activity Recognition Using Smartphones Dataset**.
 
-The dataset contains data collected from 30 different subjects using smartphone accelerometer and gyroscope sensors.
+The dataset contains:
 
-The dataset is divided into:
+- **7,352 training samples**
+- **2,947 test samples**
+- **561 engineered features**
+- **6 activity classes**
 
-- Training data: 7,352 samples
-- Testing data: 2,947 samples
-- 561 features
+The sensor data was collected from smartphone accelerometers and gyroscopes.
 
-The 561 features are already engineered from the original sensor signals.
+The activities are:
 
-For the LSTM part of the project, I also worked with the raw sensor signals instead of using the 561 engineered features.
+| Activity | Description |
+|---|---|
+| WALKING | Walking normally |
+| WALKING_UPSTAIRS | Walking upstairs |
+| WALKING_DOWNSTAIRS | Walking downstairs |
+| SITTING | Sitting |
+| STANDING | Standing |
+| LAYING | Lying down |
 
----
-
-## What I Did in This Project
-
-The project mainly follows these steps:
-
-1. Loaded the dataset
-2. Added feature names and activity labels
-3. Checked the structure of the data
-4. Checked for duplicate values
-5. Checked for missing values
-6. Performed exploratory data analysis
-7. Studied the distribution of activities among subjects
-8. Visualized different features
-9. Used t-SNE to understand the feature space
-10. Trained different machine learning models
-11. Used GridSearchCV for hyperparameter tuning
-12. Compared the models using different evaluation metrics
-13. Built LSTM models using raw sensor data
-14. Compared the LSTM results with the classical machine learning models
+The original dataset already provides a predefined training and testing split, which was used in this project.
 
 ---
 
-## Data Cleaning
+## Project Workflow
 
-Before training the models, I checked the dataset for basic data quality problems.
+The overall workflow was:
 
-There were:
-
-- 0 duplicate rows in the training data
-- 0 duplicate rows in the testing data
-- 0 missing/null values in the training data
-- 0 missing/null values in the testing data
-
-The activity distribution was also checked to understand how many samples were available for each activity.
+```text
+UCI HAR Dataset
+       |
+       v
+Data Loading
+       |
+       v
+Data Cleaning & Inspection
+       |
+       v
+Exploratory Data Analysis
+       |
+       +-----------------------------+
+       |                             |
+       v                             v
+Engineered Features             Raw Sensor Data
+       |                             |
+       v                             v
+Classical ML Models                LSTM Models
+       |                             |
+       +-------------+---------------+
+                     |
+                     v
+              Model Comparison
+                     |
+                     v
+               Final Analysis
+```
 
 ---
 
-## Exploratory Data Analysis
+## Data Exploration
 
-I performed different types of analysis to understand the dataset before building the models.
+Before training the models, the dataset was inspected to understand its structure and distribution.
 
-Some of the things I looked at were:
+The analysis included:
 
-- Number of samples for each activity
-- Activity distribution for different subjects
-- Sensor-based features
-- Acceleration magnitude
-- Gravity-related features
-- Differences between stationary and moving activities
+- Checking the shape of training and testing data
+- Checking for missing values
+- Checking for duplicate rows
+- Examining activity distribution
+- Comparing stationary and moving activities
+- Exploring acceleration magnitude
+- Examining gravity-related features
+- Visualizing the data using plots
+- Applying **t-SNE** for feature-space visualization
 
-I also used t-SNE to visualize the 561-dimensional feature space and see how the different activities are distributed.
+The dataset contains no missing values in the examined training and testing data.
 
 ---
 
-# Machine Learning Models
+## Classical Machine Learning
 
-For the first part of the project, I used the 561 engineered features provided by the dataset.
+The first set of experiments used the **561 engineered features** provided by the UCI HAR dataset.
 
-I tested the following models:
+The following models were trained and evaluated:
 
 - Logistic Regression
 - Linear SVC
@@ -102,57 +132,100 @@ I tested the following models:
 - Decision Tree
 - Random Forest
 
-I used GridSearchCV to find better hyperparameters for the models.
-
-## Results
-
-| Model | Accuracy |
-|---|---:|
-| Linear SVC | 96.67% |
-| Logistic Regression | 96.54% |
-| RBF SVM | 96.27% |
-| Random Forest | 91.45% |
-| Decision Tree | 86.22% |
-
-The best-performing classical machine learning model was Linear SVC with an accuracy of 96.67%.
+Hyperparameters were tuned using **GridSearchCV** before evaluating the models on the test set.
 
 ---
 
-# LSTM Models
+## Classical ML Results
 
-After working with the traditional machine learning models, I wanted to try a deep learning approach.
+| Model | Accuracy | Precision | Recall | F1-Score |
+|---|---:|---:|---:|---:|
+| Logistic Regression | 96.54% | 96.71% | 96.48% | 96.54% |
+| **Linear SVC** | **96.67%** | **96.96%** | **96.63%** | **96.70%** |
+| RBF SVM | 96.27% | 96.43% | 96.14% | 96.23% |
+| Random Forest | 91.45% | 91.74% | 91.02% | 91.18% |
+| Decision Tree | 86.22% | 86.25% | 85.86% | 85.93% |
 
-For this part, I used the raw sensor signals instead of the 561 engineered features.
+### Best Classical Model
 
-The input to the LSTM models was based on:
+**Linear SVC** achieved the best overall performance:
 
-- 128 time steps
-- 9 sensor channels
-- 6 activity classes
+- Accuracy: **96.67%**
+- Precision: **96.96%**
+- Recall: **96.63%**
+- F1-score: **96.70%**
 
-I experimented with different LSTM architectures to see how changing the model affected the results.
+Best parameters found through GridSearchCV:
 
-### LSTM Model 1
+```text
+C = 0.5
+tol = 0.00005
+```
 
-A single LSTM layer with 32 units.
+---
+
+## LSTM Models
+
+The second approach used the raw sensor signals instead of the 561 engineered features.
+
+The sensor data was represented as sequences with:
+
+```text
+128 time steps
+9 sensor channels
+```
+
+Several LSTM architectures were tested to compare their performance.
+
+### LSTM Architectures
+
+#### Model 1 — 1-layer LSTM
+
+```text
+LSTM(32)
+Dropout
+Dense(6)
+```
 
 Accuracy:
 
 **88.56%**
 
-### LSTM Model 2
+---
 
-A two-layer LSTM with 48 units followed by 32 units.
+#### Model 2 — 2-layer LSTM (48, 32)
+
+```text
+LSTM(48, return_sequences=True)
+Batch Normalization
+Dropout
+
+LSTM(32)
+Dropout
+
+Dense(6)
+```
 
 Accuracy:
 
 **92.16%**
 
-This was the best-performing LSTM model in my experiments.
+This was the best-performing LSTM model.
 
-### LSTM Model 3
+---
 
-A two-layer LSTM with 64 units followed by 48 units.
+#### Model 3 — 2-layer LSTM (64, 48)
+
+```text
+LSTM(64, return_sequences=True)
+Batch Normalization
+Dropout
+
+LSTM(48)
+Dropout
+
+Dense(6)
+```
 
 Accuracy:
 
@@ -162,46 +235,63 @@ Accuracy:
 
 ## LSTM Results
 
-| Model | Accuracy |
-|---|---:|
-| LSTM (32) | 88.56% |
-| LSTM (48, 32) | 92.16% |
-| LSTM (64, 48) | 88.77% |
-
-The two-layer LSTM with 48 and 32 units performed the best among the LSTM models.
+| Model | Accuracy | Precision | Recall | F1-Score | Loss |
+|---|---:|---:|---:|---:|---:|
+| LSTM 1-layer (32) | 88.56% | 88.96% | 88.46% | 88.53% | 0.420 |
+| **LSTM 2-layer (48, 32)** | **92.16%** | **92.56%** | **92.22%** | **92.17%** | **0.232** |
+| LSTM 2-layer (64, 48) | 88.77% | 88.94% | 88.97% | 88.84% | 0.323 |
 
 ---
 
-# Final Comparison
+## Overall Model Comparison
 
-The best results from both approaches were:
+The final comparison between all models was:
 
-| Approach | Best Model | Accuracy |
-|---|---|---:|
-| Classical Machine Learning | Linear SVC | 96.67% |
-| Deep Learning | LSTM (48, 32) | 92.16% |
-
-In my experiments, the classical machine learning approach performed better than the LSTM approach on this dataset.
-
-This was an interesting result because I initially expected the LSTM to perform better since it can work with sequential sensor data. However, the 561 engineered features provided by the dataset already contain a lot of useful information, which helped the classical models achieve very high accuracy.
+| Model | Accuracy | F1-Score |
+|---|---:|---:|
+| **Linear SVC** | **96.67%** | **96.70%** |
+| Logistic Regression | 96.54% | 96.54% |
+| RBF SVM | 96.27% | 96.23% |
+| Random Forest | 91.45% | 91.18% |
+| **LSTM (48, 32)** | **92.16%** | **92.17%** |
+| LSTM (64, 48) | 88.77% | 88.84% |
+| LSTM (32) | 88.56% | 88.53% |
+| Decision Tree | 86.22% | 85.93% |
 
 ---
 
-## What I Learned
+## Key Results
 
-Through this project, I learned how to work with a real-world machine learning dataset from start to finish.
+The main result from the experiments was that the **classical machine learning models performed better than the LSTM models on this dataset**.
 
-Some of the main things I learned were:
+The best model was:
 
-- How to explore sensor data
-- How to visualize data and understand patterns
-- How to train different machine learning models
-- How GridSearchCV can be used for hyperparameter tuning
-- How to evaluate classification models
-- How confusion matrices can help understand model mistakes
-- How LSTM models can be used for time-series sensor data
-- The difference between using engineered features and raw sequential data
-- Why comparing multiple models is important instead of assuming that a more complex model will always perform better
+> **Linear SVC — 96.67% accuracy and 96.70% F1-score**
+
+The best LSTM was:
+
+> **2-layer LSTM (48, 32) — 92.16% accuracy and 92.17% F1-score**
+
+This means the best classical model performed about **4.5 percentage points better** than the best LSTM in these experiments.
+
+One important observation is that the UCI HAR dataset already provides a large number of engineered features. These features capture useful information from the underlying sensor signals, which likely helped the classical models perform strongly.
+
+The results also show that a more complex neural network does not automatically produce better results. For this particular dataset, the engineered features combined with classical models were more effective than the tested LSTM architectures.
+
+---
+
+## Confusion Matrix Analysis
+
+Confusion matrices were used to examine which activities were being confused with each other.
+
+One of the more noticeable classification challenges was distinguishing between:
+
+- **Sitting**
+- **Standing**
+
+These activities have similar sensor characteristics compared with more dynamic activities such as walking.
+
+The classical models generally handled the six activity classes well, while the LSTM models showed more difficulty with the stationary activities.
 
 ---
 
@@ -212,60 +302,122 @@ Some of the main things I learned were:
 - Pandas
 - Matplotlib
 - Seaborn
-- Plotly
 - Scikit-learn
-- TensorFlow
-- Keras
+- TensorFlow / Keras
 - Jupyter Notebook
+
+### Machine Learning
+
+- Logistic Regression
+- Linear SVC
+- Support Vector Machine
+- Decision Tree
+- Random Forest
+- GridSearchCV
+
+### Deep Learning
+
+- LSTM
+- Dropout
+- Batch Normalization
+- Dense Layers
+
+### Evaluation
+
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
+- t-SNE
 
 ---
 
 ## Project Structure
 
+A possible repository structure is:
+
 ```text
 Human-Activity-Recognition/
 │
-├── UCI_HAR_Dataset/
-│
 ├── MLPROJECT1.ipynb
-│
 ├── README.md
+├── LICENSE
 │
-└── requirements.txt
+└── dataset/
+    └── UCI HAR Dataset/
+```
+
+The main analysis and experiments are contained in:
+
+```text
+MLPROJECT1.ipynb
 ```
 
 ---
 
 ## How to Run
 
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone <your-repository-url>
+cd Human-Activity-Recognition
 ```
 
-Install the required libraries:
+### 2. Install the required libraries
 
 ```bash
-pip install numpy pandas matplotlib seaborn plotly scikit-learn tensorflow
+pip install numpy pandas matplotlib seaborn scikit-learn tensorflow jupyter
 ```
 
-Download the UCI HAR dataset and place it inside the project folder.
+### 3. Open the notebook
 
-Then open:
-
-```text
-MLPROJECT1.ipynb
+```bash
+jupyter notebook MLPROJECT1.ipynb
 ```
 
-using Jupyter Notebook, JupyterLab, or Google Colab.
+### 4. Run the notebook
+
+Run the cells in order to reproduce the data analysis, model training, evaluation, and comparison.
+
+---
+
+## Limitations
+
+There are a few limitations to this project:
+
+- The experiments use the predefined train/test split provided by the UCI HAR dataset.
+- The classical models use the 561 engineered features already provided by the dataset.
+- The LSTM models use raw sensor sequences and therefore do not use the engineered 561 features.
+- Only a limited number of LSTM architectures were tested.
+- The LSTM results can vary slightly between training runs because neural network training involves random initialization and optimization.
+- The results are specific to the UCI HAR dataset and may not directly represent performance on other sensor datasets.
+- The project focuses on model comparison rather than real-time deployment on a smartphone or edge device.
 
 ---
 
 ## Conclusion
 
-This project helped me understand the complete machine learning workflow, from exploring and cleaning the data to training and comparing different models.
+This project compared classical machine learning models with LSTM-based deep learning for human activity recognition.
 
-The best result I achieved was **96.67% accuracy using Linear SVC**. The best LSTM model achieved **92.16% accuracy**.
+The classical models performed better overall, with **Linear SVC achieving the highest accuracy of 96.67%**.
 
-The main takeaway for me was that a more complex deep learning model does not always give better results. The quality and representation of the features can be just as important as the model itself.
+The best LSTM model, a **2-layer LSTM with 48 and 32 units**, achieved **92.16% accuracy**.
+
+The main observation from the experiments is that the engineered features provided by the UCI HAR dataset were highly effective for this classification problem. Because of this, relatively simple classical models were able to outperform the tested LSTM architectures.
+
+The project also shows why model comparison is important. A more complex model is not necessarily a better model for every dataset or problem.
+
+---
+
+## Future Improvements
+
+Some possible next steps for this project would be:
+
+- Test CNN-LSTM architectures
+- Experiment with bidirectional LSTMs
+- Perform more systematic hyperparameter tuning for the neural networks
+
+---
+
