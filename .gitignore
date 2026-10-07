@@ -1,9 +1,8 @@
-# ---- Dataset (download it from UCI, do not upload it) ----
+# ---- Dataset ---
 UCI HAR Dataset/
 UCI_HAR_Dataset/
 *.zip
 
-# ---- Files created by the notebook ----
 saved_models/
 *.keras
 *.h5
