@@ -7,7 +7,7 @@ against LSTM models trained directly on raw sensor signal sequences.
 
 ## Dataset
 
-UCI HAR Dataset — not included in this repo (see `.gitignore`). Download separately:
+UCI HAR Dataset 
 
 https://archive.ics.uci.edu/dataset/364/smartphone+dataset+for+human+activity+recognition+har+in+ambient+assisted+living+aal
 
